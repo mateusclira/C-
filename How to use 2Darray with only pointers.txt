@@ -1,0 +1,34 @@
+#include <cstdlib>
+ 
+ 
+/* Question: return a 1D array to the function 'getArray2D' from where it is called */
+int * getArray1D(int n) {
+    //Write your solution code below this line
+    int *x;
+   
+    //x = (int*) malloc(n * sizeof(int));
+    x = new int[n];
+    return x;
+}
+ 
+ 
+/*Question: return a 2D array to the 'main' program(not shown). It should call the above function 'getArray1D' to get 1D array of size 'n'. */
+int ** getArray2D(int m, int n, int **Aptr) {
+    //Write your solution code below this line
+ 
+    int *p,*q;
+   
+    p = getArray1D(m);
+    q = getArray1D(n);
+   
+    *(Aptr) = *p;
+    *(*(Aptr)) = *q;
+   
+    delete[] p;
+    p = NULL;
+   
+    delete[] q;
+    q = NULL;
+   
+    return Aptr;
+}

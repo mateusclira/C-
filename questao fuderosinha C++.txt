@@ -1,0 +1,90 @@
+/* Question:  You are required to write code that does the following:-
+
+1. Find out the sum of the squares of the digits of the rpm
+2. Multiply the number obtained in (1) by 323
+3. Do a cyclic right shift of digits of the rpm i.e. 
+    if Number is 1234, after cyclic right shift, the number will be 4123. 
+    Thereafter, take the last two digits of the number obtained just now, and add it to the number obtained in point 2. Thus, obtaining a new rpm value.
+4. Do these steps till the number of years are 10 or the harddisk has reached the maximum RPM
+
+long long int rpm: Original value of RPM
+int years: Store the number years that have elapsed
+long long int finalRPM: Store the modified value of RPM i.e. the final of RPM */
+
+void solutionRPM(long long int rpm, int &years, long long int &finalRPM) {
+
+    //Write your solution code below this line
+    int dezmilhar = 0, milhar = 0, centena = 0, dezena = 0, unidade = 0, auxiliar1 = 0, auxiliar2 = 0;
+    long long int SomaQuadrados = 0, Mul232 = 0, rpm_limit;
+    years = 0;
+    rpm_limit = rpm*8;
+    finalRPM = 0;
+    while((years < 10) && (rpm <= rpm_limit))
+    {
+        if(rpm > 9999 && rpm <= 99999)
+        {
+            dezmilhar = rpm/10000;
+            milhar = rpm/1000;
+            milhar = milhar%10;
+            centena = rpm/100;
+            centena = centena%10;
+            dezena = rpm/10;
+            dezena = dezena%10;
+            unidade = rpm%10;
+            
+            SomaQuadrados = (dezmilhar*dezmilhar) + (milhar*milhar) + (centena*centena) + (dezena*dezena) + (unidade*unidade);
+            
+            Mul232 = SomaQuadrados*323;
+            
+            auxiliar1 = dezmilhar;
+            dezmilhar = unidade;
+            
+            auxiliar2 = milhar;
+            milhar = auxiliar1;
+            
+            auxiliar1 = centena;
+            centena = auxiliar2;
+            
+            auxiliar2 = dezena;
+            dezena = auxiliar1;
+            
+            auxiliar1 = unidade;
+            unidade = auxiliar2;
+            
+            rpm = Mul232 + unidade + (dezena*10);
+        }
+        else if(rpm > 999 && rpm <= 9999)
+        {
+            dezmilhar = 0;
+            milhar = rpm/1000;
+            centena = rpm/100;
+            centena = centena%10;
+            dezena = rpm/10;
+            dezena = dezena%10;
+            unidade = rpm%10;
+            
+            SomaQuadrados = (milhar*milhar) + (centena*centena) + (dezena*dezena) + (unidade*unidade);
+
+            Mul232 = SomaQuadrados*323;
+
+            auxiliar1 = milhar;
+            milhar = unidade;
+            
+            auxiliar2 = centena;
+            centena = auxiliar1;
+            
+            auxiliar1 = dezena;
+            dezena = auxiliar2;
+            
+            auxiliar2 = unidade;
+            unidade = auxiliar1;
+            
+            rpm = Mul232 + unidade + (dezena*10);
+
+        }
+
+        finalRPM = rpm;
+        years++;
+        
+    }
+}
